@@ -1,0 +1,62 @@
+class Solution {
+public int maxPoints(int[][] points) {
+        if(points.length==1){
+            return 1;
+        }
+        List<Line> lineList= new ArrayList<>(points.length* points.length);
+        lineList.add(new Line(0,1,points));
+
+
+        for (int pointIndex=2;pointIndex<points.length;pointIndex++){
+            boolean [] toCreateLineWith=new boolean[pointIndex];
+            Arrays.fill(toCreateLineWith,true);
+            for (Line line:lineList){
+                line.judgeAndAdd(pointIndex,points,toCreateLineWith);
+            }
+
+            for(int toCreateWithIndex=0;toCreateWithIndex<pointIndex;toCreateWithIndex++){
+                if(toCreateLineWith[toCreateWithIndex]){
+                    lineList.add(new Line(toCreateWithIndex,pointIndex,points));
+                }
+            }
+        }
+
+        int max=2;
+        for (Line line:lineList){
+            max=Math.max(max,line.pointIndices.size());
+        }
+        return max;
+    }
+
+    class Line{
+        int x1,y1,x2,y2;
+        List<Integer> pointIndices=new ArrayList<>();
+        Line(int pointIndex1, int pointIndex2, int[][]points){
+            x1=points[pointIndex1][0];
+            y1=points[pointIndex1][1];
+            x2=points[pointIndex2][0];
+            y2=points[pointIndex2][1];
+            pointIndices.add(pointIndex1);
+            pointIndices.add(pointIndex2);
+        }
+
+        boolean judgeAndAdd(int pointIndex,int[][]points,boolean[]toCreateLineWith){
+            int x=points[pointIndex][0];
+            int y=points[pointIndex][1];
+
+            if((x2-x)*(y1-y)==(x1-x)*(y2-y)){
+
+                for(int pointOnLine:pointIndices){
+                    toCreateLineWith[pointOnLine]=false;
+                }
+
+                pointIndices.add(pointIndex);
+
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,38 @@
+class Solution {
+    public int findNumberOfLIS(int[] nums) {
+      int ans=0;
+     int dp[][]=new int[nums.length][2];
+     for(int i=0;i<nums.length;i++)
+     {
+         int longest=0;
+         for(int j=0;j<i;j++)
+         {
+          if(nums[i]>nums[j])
+          {
+              longest=Math.max(longest,dp[j][0]);
+          }
+         }
+         dp[i][0]=longest+1;
+         ans=Math.max(dp[i][0],ans);
+         int prevseq=0;
+         for(int j=0;j<i;j++)
+         {
+          if(nums[i]>nums[j])
+          {
+              if(dp[j][0]==dp[i][0]-1)
+                  prevseq=prevseq+dp[j][1];
+          }
+         }
+         dp[i][1]=Math.max(1,prevseq);
+     }
+     int count=0;
+     for(int i=nums.length-1;i>=0;i--)
+     {
+         if(dp[i][0]==ans)
+         {
+          count=count+dp[i][1];
+         }
+     }
+     return count;
+    }
+}

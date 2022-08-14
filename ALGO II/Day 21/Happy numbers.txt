@@ -1,0 +1,16 @@
+class Solution {
+    Set<Integer> map = new HashSet<Integer>();
+    public boolean isHappy(int n) {
+        
+        if(n == 1)  return true;
+        else if(!map.add(n)) return false;
+        else{
+            int sum = 0;
+            while(n>0){
+               sum = sum + ((n%10)*(n%10));
+               n= n/10; 
+            }
+            return isHappy(sum);
+        }
+   }
+}

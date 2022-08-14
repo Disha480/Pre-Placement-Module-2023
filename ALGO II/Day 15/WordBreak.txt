@@ -1,0 +1,18 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        
+        //table to store valid partition up until that point
+        boolean[] table = new boolean[s.length()];
+        
+        //brute force all-substrings and perform check w dictionary
+        for (int i = 0; i<s.length(); i++) {
+            for (int j = 0; j<=i ; j++) {
+                if (j == 0 || table[j-1]) 
+                    if (wordDict.contains(s.substring(j,i+1)))
+                        table[i] = true;
+            }
+        }
+        
+        return table[s.length()-1];
+    }
+}

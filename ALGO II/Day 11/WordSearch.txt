@@ -1,0 +1,31 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == word.charAt(0) && doesExist(board, word, i, j, 0, m, n)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean doesExist(char[][] board, String word, int cr, int cc, int idx, int m, int n) {
+        if (idx == word.length()) {
+            return true;
+        }
+        if (cr < 0 || cr == m || cc == n || cc < 0 || board[cr][cc] != word.charAt(idx)) {
+            return false;
+        }
+        board[cr][cc] = '*';
+        int[] r = {0, 1, 0, -1};
+        int[] c = {1, 0, -1, 0};
+        for (int i = 0; i < 4; i++) {
+            boolean ans = doesExist(board, word, cr + r[i], cc + c[i], idx + 1, m, n);
+            if (ans) return true;
+        }
+        board[cr][cc] = word.charAt(idx);
+        return false;
+    }
+}

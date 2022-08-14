@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool areBracketsBalanced(string expr)
+{ 
+    stack<char> temp;
+        for(int i=0;i<expr.length();i++)
+        {
+            if(temp.empty())
+            {
+                temp.push(expr[i]);
+            }
+            else if((temp.top()=='('&& expr[i]==')') )
+            {
+                temp.pop();
+            }
+            else
+            {
+                temp.push(expr[i]);
+            }
+        }
+        if(temp.empty())
+        {
+            return true;
+        }
+        return false;
+}
+    vector<string> generateParenthesis(int n) {
+        string str = "";
+        for(int i=0;i<n; i++) {
+         str.push_back('(');
+         str.push_back(')');
+        }
+        sort(str.begin(),str.end());
+        vector<string> vstring;
+        do {
+            if(areBracketsBalanced(str)) {
+             vstring.push_back(str);
+            }
+        }
+        while(next_permutation(str.begin(),str.end()));
+        return vstring;
+    }
+};

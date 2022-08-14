@@ -1,0 +1,15 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        if (nums.length == 1) return true;
+        int mxInd = 0;
+        for (int i=0; i < nums.length-1; i++) {
+            if (nums[i] == 0) {
+                if (mxInd <= i) break;
+            }
+            mxInd = Math.max(mxInd, i+nums[i]);
+        }
+        
+        if (mxInd >= nums.length-1 && nums[0] != 0) return true;
+        return false;
+    }
+}

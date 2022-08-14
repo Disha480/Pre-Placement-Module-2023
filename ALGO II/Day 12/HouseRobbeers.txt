@@ -1,0 +1,50 @@
+class Solution {
+    public int rob(int[] nums) {
+	//Base Cases
+        if(nums.length == 0){
+            return 0;
+        }
+        if(nums.length == 1){
+            return nums[0];
+        }
+        if(nums.length == 2){
+            return Math.max(nums[0], nums[1]);
+        }
+        
+		//Store last element in nums and then set it to 0
+        int size = nums.length;
+        int temp = nums[size - 1];
+        nums[size - 1] = 0;
+        
+		//Variables for dp
+        int first = 0;
+        int second = nums[size - 2];
+        int maxFirst = 0;
+        int maxSecond = 0;
+        
+		//Perform house robber I but starting one element over to accomodate the extra 0 at the end
+        for(int i = size - 3; i >= 0; i--){
+            maxFirst = Math.max(first + nums[i], second);
+            first = second;
+            second = maxFirst;
+        }
+        
+		//Reset nums to original state and set the first element to 0
+        nums[size - 1] = temp;
+        nums[0] = 0;
+        
+		//Reset for next dp
+        first = 0;
+        second = nums[size - 1];
+        
+		//Perform house robber I. Since the first element is 0 this time, we don't need any special accomodations
+        for(int i = size - 2; i >= 0; i--){
+            maxSecond = Math.max(first + nums[i], second);
+            first = second;
+            second = maxSecond;
+        }
+        
+		//Return max of both dp traversals
+        return Math.max(maxFirst, maxSecond);
+    }
+}

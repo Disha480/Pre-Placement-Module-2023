@@ -1,0 +1,41 @@
+class Solution{
+String str="";
+int max=0;
+String longestPalindrome(String S){
+if(S==null || S.length()<1)return "";
+
+    for(int i=0;i<S.length();i++){
+                    
+       int left=i;
+        int right=i;
+    while(left>=0 && right <S.length() && S.charAt(left)==S.charAt(right)){
+        left--;
+        right++;
+    }
+    
+    int size=right-left-1;
+    
+    if(size>max){
+        str=S.substring(left+1,right);
+        max=size;
+    }
+
+        left=i;
+        right=i+1;
+        
+    while(left>=0 && right <S.length() && S.charAt(left)==S.charAt(right)){
+        left--;
+        right++;
+    }
+    
+     size=right-left-1;
+    
+    if(size>max){
+        str=S.substring(left+1,right);
+        max=size;
+    }
+        
+    }
+  return str;
+}
+}

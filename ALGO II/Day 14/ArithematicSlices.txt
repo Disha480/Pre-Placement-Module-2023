@@ -1,0 +1,49 @@
+class Solution {
+    Integer[] memo;
+    public int numberOfArithmeticSlices(int[] nums) {
+        memo = new Integer[nums.length];
+        int res = 0;
+        for(int i = 0; i < nums.length; i++){
+            List<Integer> path =  new ArrayList<Integer>();
+            path.add(nums[i]);
+           res+=dp(nums, i,path,0);
+        }
+        
+        return res;
+    }
+    
+    
+    public int dp(int[] nums, int indx, List<Integer> path, int diff){
+        if(indx == nums.length-1){
+            return 0;
+        }
+        int ans = 0;
+        if(path.size() >= 3 && memo[indx] != null){
+            return memo[indx];
+        }
+        
+        
+        
+        if(indx < nums.length-1){
+            //if we currently only have one element, we get the current difference
+            if(path.size() == 1){
+                diff = nums[indx+1] - nums[indx];
+            }
+            
+            //if current element and next element has the same difference we increase ans by one and move on to the next element
+            if(nums[indx+1] - nums[indx] == diff){
+                path.add(nums[indx+1]);
+                if(path.size() >= 3){
+                    ans+=1;
+                }
+                
+                ans+=dp(nums, indx+1, path, diff);
+                memo[indx] = ans;
+            }
+        }
+        
+        return ans;
+        
+       
+    }
+}

@@ -1,0 +1,28 @@
+class Solution {
+    public int findPeek(int []nums){
+       int start = 0,end = nums.length-1;
+        int pivot = -1;
+        while(start<=end){
+            int mid = start + (end-start)/2;
+            if(mid == 0 || mid == nums.length-1){ // if reached at end of array, it will be min
+                return mid;
+            }
+            else if(nums[mid] > nums[mid-1] && nums[mid ] > nums[mid+1])
+               return mid;
+            
+            if(nums[mid] > nums[0])
+                start = mid+1;
+            else
+                end = mid;
+        } 
+        return pivot;
+    }
+    public int findMin(int[] nums) {
+        int len = nums.length;
+        if(len == 1)return nums[0];
+        if(nums[0] < nums[len-1]) return nums[0]; // if in ascending order return first min ele
+         
+        return nums[findPeek(nums)+1]; // min ele if present , will be next to peek 
+    }
+}
+

@@ -1,0 +1,30 @@
+class Solution {
+    public int minDistance(String word1, String word2) {
+        int[][] dp = new int[word1.length()][word2.length()];
+        for (int[] a : dp) {
+            Arrays.fill(a, -1);
+        }
+        return minimum(word1, word2, 0, 0, dp);
+    }
+    public int minimum(String s, String p, int i, int j, int[][] dp) {
+        if (i == s.length()) {
+            return p.length() - j;
+        }
+        if (j == p.length()) {
+            return s.length() - i;
+        }
+        
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+        
+        int ans = 0;
+        
+        if (s.charAt(i) == p.charAt(j)) {
+            ans = minimum(s, p, i + 1, j + 1, dp);
+        } else {
+            ans = 1 + Math.min(minimum(s, p, i + 1, j, dp), minimum(s, p, i, j + 1, dp));
+        }
+        return dp[i][j] = ans;
+    }
+}
